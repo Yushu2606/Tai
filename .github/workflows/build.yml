@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: Tai.sln
+      Publish_Output_Directory: .\publish
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c ${{ matrix.configuration }}
+
+      - name: Publish
+        run: dotnet publish --no-restore --no-build -c ${{ matrix.configuration }} --output ${{ env.Publish_Output_Directory }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: Tai-${{ github.sha }}-${{ matrix.configuration }}-Windows-x64
+          path: ${{ env.Publish_Output_Directory }}
