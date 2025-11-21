@@ -1,4 +1,4 @@
-﻿using Core.Librarys;
+using Core.Librarys;
 using Core.Librarys.Browser;
 using Core.Librarys.SQLite;
 using Core.Models.Data;
@@ -843,7 +843,7 @@ namespace Core.Servicers.Instances
                 {
                     name = $"Tai网页统计数据({start_.ToString("yyyy年MM月")})";
                 }
-                mapper.Save(Path.Combine(dir_, $"{name}.xlsx"));
+                mapper.Save(Path.Combine(dir_, $"{name}.xlsx"), false);
 
                 //  导出csv
                 using (var writer = new StreamWriter(Path.Combine(dir_, $"{name}.csv"), false, System.Text.Encoding.UTF8))

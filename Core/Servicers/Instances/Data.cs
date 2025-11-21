@@ -1,4 +1,4 @@
-﻿using Core.Librarys.SQLite;
+using Core.Librarys.SQLite;
 using Core.Models;
 using Core.Servicers.Interfaces;
 using System;
@@ -683,7 +683,7 @@ namespace Core.Servicers.Instances
                 {
                     name = $"Tai数据({start.ToString("yyyy年MM月")})";
                 }
-                mapper.Save(Path.Combine(dir, $"{name}.xlsx"));
+                mapper.Save(Path.Combine(dir, $"{name}.xlsx"), false);
 
                 //  导出csv
                 using (var writer = new StreamWriter(Path.Combine(dir, $"{name}-每日.csv"), false, System.Text.Encoding.UTF8))
